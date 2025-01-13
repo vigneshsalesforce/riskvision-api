@@ -1,0 +1,8 @@
+const APP_CONSTANTS = {
+  CORS_MAX_AGE: 86400,
+  CORS_OPTION_SUCCESS_STATUS: 204,
+};
+
+module.exports = {
+  APP_CONSTANTS,
+};
