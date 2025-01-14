@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const config = require('./index');
 const Tenant = require('../models/landlord/tenant');
 const attachModels = require('../models/tenant/attachModels');
+const InitSchema = require('../init/initSchema');
 
 const mongooseOptions = {
   maxPoolSize: 10,
@@ -30,6 +31,7 @@ const createTenantDbConnection = (dbName) => {
     tenantDb.on('connected', () => {
       console.log(`Connected to Tenant Database: ${dbName}`);
       const models = attachModels(tenantDb);
+      InitSchema(models, tenantDb); 
       handleDisconnection(tenantDb, dbName);
       resolve({ connection: tenantDb, models });
     });

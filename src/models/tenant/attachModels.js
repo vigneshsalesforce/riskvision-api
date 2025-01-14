@@ -9,13 +9,11 @@ const mongoose = require('mongoose');
  */
 const attachModels = (tenantDb) => {
   const models = {};
-  const modelsPath = path.resolve(__dirname, '../tenant'); // Adjust to match your folder structure
-
-  console.log('Models Path:', modelsPath); // Debugging log to verify the path
+  const modelsPath = path.resolve(__dirname, '../tenant/schema'); // Adjust to match your folder structure
 
   // Read all files in the tenant models directory
   fs.readdirSync(modelsPath).forEach((file) => {
-    if (file.endsWith('.js') && file !== 'attachModels.js') { // Exclude attachModels.js
+    if (file.endsWith('.js') && file !== 'field.js') { // Exclude attachModels.js
       const modelName = file.replace('.js', ''); // Get the model name from the file name
       const modelSchema = require(path.join(modelsPath, file)); // Require the model schema
 

@@ -10,13 +10,13 @@ const locationSchema = new mongoose.Schema(
     LastActivityDate: { type: Date },
     Active: { type: Boolean, default: true },
     Area_m2: { type: String },
-    Company: { type: mongoose.Schema.Types.ObjectId, ref: "Company" },
-    ExternalWalls: { type: mongoose.Schema.Types.ObjectId, ref: "Picklist" }, //picklist
+    Account: { type: mongoose.Schema.Types.ObjectId, ref: "Account" },
+    ExternalWalls: { type: String }, // Picklist
     Fire_Divisions: { type: String },
-    Floors: [{ type: mongoose.Schema.Types.ObjectId, ref: "Picklist" }], //multipicklist
+    Floors: [{ type: String }], // Multipicklist
     FullAddress: { type: String },
     Height: { type: String },
-    Internal_Walls: [{ type: mongoose.Schema.Types.ObjectId, ref: "Picklist" }], //multipicklist
+    Internal_Walls: [{ type: String }], // Multipicklist
     Location_City: { type: String },
     Location_Coordinates_Latitude: { type: Number },
     Location_Coordinates_Longitude: { type: Number },
@@ -24,27 +24,16 @@ const locationSchema = new mongoose.Schema(
     Location_Postcode: { type: String },
     Location_State: { type: String },
     Location_Street: { type: String },
-    Location_Type: { type: mongoose.Schema.Types.ObjectId, ref: "Picklist" }, //picklist
+    Location_Type: { type: String }, // Picklist
     Occupancy: { type: String },
     Protection: { type: String },
-    Roof: [{ type: mongoose.Schema.Types.ObjectId, ref: "Picklist" }], //multipicklist
-    StructuralFrame: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "Picklist" },
-    ], //multipicklist
+    Roof: [{ type: String }], // Multipicklist
+    StructuralFrame: [{ type: String }], // Multipicklist
     Type_of_ISP: { type: String },
     YearConstructed: { type: String },
-    of_ISP: { type: mongoose.Schema.Types.ObjectId, ref: "Picklist" }, //picklist
+    of_ISP: { type: String }, // Picklist
   },
-  { timestamps: true }
+  { timestamps: true } // Automatically adds createdAt and updatedAt
 );
-
-// Virtual property to reconstruct Location coordinates
-locationSchema.virtual("Location_Coordinates").get(function () {
-  return {
-    latitude: this.Location_Coordinates_Latitude,
-    longitude: this.Location_Coordinates_Longitude,
-  };
-});
-
 
 module.exports = locationSchema;
