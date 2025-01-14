@@ -1,0 +1,140 @@
+module.exports = {
+  name: "building",
+  label: "Building",
+  description: "Represents a building associated with an account.",
+  fields: [
+    {
+      name: "OwnerId",
+      label: "Owner",
+      type: "lookup",
+      options: {
+        dynamic: {
+          objectName: "user",
+          displayField: "fullName",
+          valueField: "_id",
+        },
+      },
+      order: 1,
+    },
+    {
+      name: "Name",
+      label: "Building Name",
+      type: "text",
+      required: true,
+      order: 2,
+    },
+    {
+      name: "CreatedById",
+      label: "Created By",
+      type: "lookup",
+      options: {
+        dynamic: {
+          objectName: "user",
+          displayField: "fullName",
+          valueField: "_id",
+        },
+      },
+      order: 3,
+    },
+    {
+      name: "LastModifiedById",
+      label: "Last Modified By",
+      type: "lookup",
+      options: {
+        dynamic: {
+          objectName: "user",
+          displayField: "fullName",
+          valueField: "_id",
+        },
+      },
+      order: 4,
+    },
+    { name: "Area_m2", label: "Area (m²)", type: "text", order: 5 },
+    { name: "Comments", label: "Comments", type: "textarea", order: 6 },
+    {
+      name: "InternalWalls",
+      label: "Internal Walls",
+      type: "multiselect",
+      options: { static: ["Brick", "Concrete", "Drywall", "Glass"] },
+      order: 7,
+    },
+    { name: "FireDivisions", label: "Fire Divisions", type: "text", order: 8 },
+    {
+      name: "Floors",
+      label: "Floors",
+      type: "multiselect",
+      options: { static: ["Ground Floor", "First Floor", "Second Floor"] },
+      order: 9,
+    },
+    { name: "Height", label: "Height", type: "text", order: 10 },
+    {
+      name: "ExternalWalls",
+      label: "External Walls",
+      type: "multiselect",
+      options: { static: ["Brick", "Concrete", "Glass", "Metal"] },
+      order: 11,
+    },
+    { name: "Occupancy", label: "Occupancy", type: "text", order: 12 },
+    {
+      name: "PropertyRiskAssessment",
+      label: "Property Risk Assessment",
+      type: "lookup",
+      options: {
+        dynamic: {
+          objectName: "propertyRiskAssessment",
+          displayField: "Name",
+          valueField: "_id",
+        },
+      },
+      order: 13,
+    },
+    { name: "Protection", label: "Protection", type: "text", order: 14 },
+    {
+      name: "Roof",
+      label: "Roof",
+      type: "multiselect",
+      options: { static: ["Tile", "Metal", "Concrete", "Shingle"] },
+      order: 15,
+    },
+    {
+      name: "StructuralFrame",
+      label: "Structural Frame",
+      type: "multiselect",
+      options: { static: ["Steel", "Wood", "Concrete", "Aluminum"] },
+      order: 16,
+    },
+    { name: "Type_of_ISP", label: "Type of ISP", type: "text", order: 17 },
+    {
+      name: "YearConstructed",
+      label: "Year Constructed",
+      type: "text",
+      order: 18,
+    },
+    {
+      name: "of_ISP",
+      label: "ISP Type",
+      type: "dropdown",
+      options: { static: ["Broadband", "Fiber", "Satellite"] },
+      order: 19,
+    },
+    {
+      name: "Account",
+      label: "Account",
+      type: "lookup",
+      options: {
+        dynamic: {
+          objectName: "account",
+          displayField: "Name",
+          valueField: "_id",
+        },
+      },
+      order: 20,
+    },
+    {
+      name: "Comments_Backup",
+      label: "Backup Comments",
+      type: "textarea",
+      order: 21,
+    },
+  ],
+};

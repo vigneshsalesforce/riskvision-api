@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const companySchema = new mongoose.Schema({
+const accountSchema = new mongoose.Schema(
+  {
     IsDeleted: { type: Boolean, default: false },
-    MasterRecordId: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
     Name: { type: String, required: true },
-    Type: { type: mongoose.Schema.Types.ObjectId, ref: 'Picklist' },
-    ParentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
+    Type: { type: String }, // Picklist values to be defined in ObjectDefinition
+    ParentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Account' },
     BillingStreet: { type: String },
     BillingCity: { type: String },
     BillingState: { type: String },
@@ -24,19 +24,13 @@ const companySchema = new mongoose.Schema({
     Fax: { type: String },
     Website: { type: String },
     PhotoUrl: { type: String },
-    Industry: { type: mongoose.Schema.Types.ObjectId, ref: 'Picklist' },
+    Industry: { type: String }, // Picklist values to be defined in ObjectDefinition
     AnnualRevenue: { type: Number },
     NumberOfEmployees: { type: Number },
     Description: { type: String },
     OwnerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     CreatedById: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     LastModifiedById: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    LastActivityDate: { type: Date },
-    LastViewedDate: { type: Date },
-    LastReferencedDate: { type: Date },
-    IsCustomerPortal: { type: Boolean, default: false },
-    JigsawCompanyId: { type: String },
-    IsPriorityRecord: { type: Boolean, default: false },
     RenewalDate: { type: String },
     Global: { type: Boolean, default: false },
     Referrer: { type: String },
@@ -44,36 +38,12 @@ const companySchema = new mongoose.Schema({
     Days_Since_Created: { type: Number },
     Days_Since_Last_Modified: { type: Number },
     Days_Since_Last_Activity: { type: Number },
-    SubType: { type: mongoose.Schema.Types.ObjectId, ref: 'Picklist' },
+    SubType: { type: String }, // Picklist values to be defined in ObjectDefinition
     IsNextYearLeap: { type: Boolean, default: false },
     NextRenewalOn: { type: Date },
-    BDM: { type: mongoose.Schema.Types.ObjectId, ref: 'Picklist' },
-},
-{ timestamps: true }
+    BDM: { type: String }, // Picklist values to be defined in ObjectDefinition
+  },
+  { timestamps: true } // Automatically adds createdAt and updatedAt
 );
 
-// Virtual property to reconstruct the full addresses
-companySchema.virtual('BillingAddress').get(function () {
-    return {
-        street: this.BillingStreet,
-        city: this.BillingCity,
-        state: this.BillingState,
-        postalCode: this.BillingPostalCode,
-        country: this.BillingCountry,
-    };
-});
-
-companySchema.virtual('ShippingAddress').get(function () {
-    return {
-        street: this.ShippingStreet,
-        city: this.ShippingCity,
-        state: this.ShippingState,
-        postalCode: this.ShippingPostalCode,
-        country: this.ShippingCountry,
-    };
-});
-
-companySchema.index({ Name: 1 }, { unique: true });
-
-
-module.exports = companySchema;
+module.exports = accountSchema;

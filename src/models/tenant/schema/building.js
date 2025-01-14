@@ -8,25 +8,23 @@ const buildingSchema = new mongoose.Schema(
     LastModifiedById: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     Area_m2: { type: String },
     Comments: { type: String },
-    InternalWalls: [{ type: mongoose.Schema.Types.ObjectId, ref: "Picklist" }], //multipicklist
+    InternalWalls: [{ type: String }], // Multipicklist (array of strings)
     FireDivisions: { type: String },
-    Floors: [{ type: mongoose.Schema.Types.ObjectId, ref: "Picklist" }], //multipicklist
+    Floors: [{ type: String }], // Multipicklist (array of strings)
     Height: { type: String },
-    ExternalWalls: [{ type: mongoose.Schema.Types.ObjectId, ref: "Picklist" }], //multipicklist
+    ExternalWalls: [{ type: String }], // Multipicklist (array of strings)
     Occupancy: { type: String },
     PropertyRiskAssessment: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "PropertyRiskAssessment",
     },
     Protection: { type: String },
-    Roof: [{ type: mongoose.Schema.Types.ObjectId, ref: "Picklist" }], //multipicklist
-    StructuralFrame: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "Picklist" },
-    ], //multipicklist
+    Roof: [{ type: String }], // Multipicklist (array of strings)
+    StructuralFrame: [{ type: String }], // Multipicklist (array of strings)
     Type_of_ISP: { type: String },
     YearConstructed: { type: String },
-    of_ISP: { type: mongoose.Schema.Types.ObjectId, ref: "Picklist" }, //picklist
-    Company: { type: mongoose.Schema.Types.ObjectId, ref: "Company" },
+    of_ISP: { type: String }, // Picklist
+    Account: { type: mongoose.Schema.Types.ObjectId, ref: "Account" },
     Comments_Backup: { type: String },
   },
   { timestamps: true }

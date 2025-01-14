@@ -10,5 +10,3 @@ router.put(`/:id/update`,accountController.updateAccount);
 router.delete(`/:id/delete`,accountController.deleteAccount);
 
 module.exports = router;
-
-

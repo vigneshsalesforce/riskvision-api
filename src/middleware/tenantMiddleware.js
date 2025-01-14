@@ -1,35 +1,47 @@
-const { createTenantDbConnection } = require('../config/database');
-const Tenant = require('../models/landlord/tenant');
- const ApiError = require('../utils/apiError');
+const { createTenantDbConnection } = require("../config/database");
+const Tenant = require("../models/landlord/tenant");
+const ApiError = require("../utils/apiError");
+const { tenantConnections } = require("../config/database"); // Cached connections
 
-
-const tenantDbCache = new Map();
-
+/**
+ * Middleware to attach tenant-specific database and models to the request
+ */
 const tenantMiddleware = async (req, res, next) => {
-  let tenantDomain = req.hostname; // extract from host
-    if (tenantDomain === "localhost")
-        tenantDomain = req.headers.origin.split("//")[1]
-
-    
   try {
-    const tenant = await Tenant.findOne({domain: tenantDomain})
-  
-    if (!tenant){
-        return next(new ApiError("Tenant not found", 404));
+    // Extract tenant domain dynamically
+    let tenantDomain = req.hostname || req.headers["x-forwarded-host"];
+    const subdomain = tenantDomain.split(".")[0];
+    let tenant_name = `${subdomain}_tenant`;
+    if (!subdomain) {
+      return next(new ApiError("Unable to determine tenant domain", 400));
     }
 
-      if (tenantDbCache.has(tenant.databaseName)){
-        req.tenantDb = tenantDbCache.get(tenant.databaseName);
-          return next();
-      }
+    // Check cache for tenant connection
+    if (tenantConnections[tenant_name]) {
+      const { models } = tenantConnections[tenant_name];
+      req.models = models;
+      return next();
+    }
 
-     const tenantDb = await createTenantDbConnection(tenant.databaseName);
-      tenantDbCache.set(tenant.databaseName, tenantDb)
-    req.tenantDb = tenantDb;
+    // Fallback: Check Tenant collection in the database
+    const tenant = await Tenant.findOne({ domain: subdomain });
+    if (!tenant) {
+      return next(
+        new ApiError(`Tenant not found for domain: ${subdomain}`, 404)
+      );
+    }
+
+    // Establish a new connection and cache it
+    const models  = await createTenantDbConnection(
+      tenant.databaseName
+    );
+    tenantConnections[tenant_name] = { connection, models };
+
+    req.models = models;
     next();
   } catch (error) {
-    console.error("Error connecting to tenant DB", error);
-   return next(new ApiError("Internal Server Error", 500));
+    console.error("Error in tenantMiddleware:", error);
+    return next(new ApiError("Internal Server Error", 500));
   }
 };
 
