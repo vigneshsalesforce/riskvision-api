@@ -88,9 +88,8 @@ const modifyAccount = async (req) => {
 
 const archiveAccount = async (req) => {
     try{
-        const {Account} = req.tenantDb.models;
-        const account = await Account.findByIdAndUpdate(req.params.id, {isArchived: true}, {new: true});
-        return account;
+        const {account} = req.models;
+        await account.findByIdAndDelete(req.params.id);
     } catch(error){
         throw error;
     }

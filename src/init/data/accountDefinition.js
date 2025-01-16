@@ -84,7 +84,7 @@ module.exports = {
       options: {
         dynamic: {
           objectName: "user",
-          displayField: "fullName",
+          displayField: "Name",
           valueField: "_id",
         },
       },
