@@ -7,6 +7,6 @@ router.get(`/list`, locationController.getAllLocations);
 router.post(`/create`, locationController.createLocation);
 router.get(`/:id/view`, locationController.getLocation);
 router.put(`/:id/update`, locationController.updateLocation);
-router.delete(`/:id/delete`, locationController.deleteLocation);
+router.delete(`/:id`, locationController.deleteLocation);
 
 module.exports = router;
