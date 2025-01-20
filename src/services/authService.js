@@ -34,8 +34,9 @@ const handleGoogleLogin = (req, res, next) => {
       
             // Generate token and redirect to frontend
             const token = generateToken(user, { domain: client });
-
-            const frontEndURL = process.env.WILDCARD_FRONTEND_URL.replace('*', client);
+            //To-DO: Change the frontEndURL to wildcard
+            //const frontEndURL = process.env.WILDCARD_FRONTEND_URL.replace('*', client);
+            const frontEndURL = process.env.FRONTEND_URL;
             const redirectURL = `${frontEndURL}/redirect?token=${token}&client=${client}`;
       
             return res.redirect(redirectURL);
