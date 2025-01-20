@@ -35,6 +35,7 @@ const createTenantDbConnection = (dbName) => {
       const models = attachModels(tenantDb);
       InitSchema(models, tenantDb); 
       handleDisconnection(tenantDb, dbName);
+      tenantConnections[dbName] = { connection: tenantDb, models };
       resolve({ connection: tenantDb, models });
     });
 

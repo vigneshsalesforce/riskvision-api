@@ -28,13 +28,13 @@ const list = async (req, { page = 1, limit = 10, search, sortBy, sortOrder }) =>
             .skip((page - 1) * limit)
             .limit(limit);
             return {
-               data:{
-                    data: propertyRiskAssessments,
-                     total,
-                 },
-              pagination:{
-                totalPages: Math.ceil(total/limit),
-               }
+               data: propertyRiskAssessments,
+               pagination: {
+                currentPage: page,
+                pageSize: limit,
+                totalRecords: total,
+                totalPages: Math.ceil(total / limit),
+              },
 
          };
     } catch (error) {

@@ -25,7 +25,8 @@ const handleGoogleLogin = (req, res, next) => {
 
         if (!user) {
             logger.warn('User not found:', info?.message || 'Unknown error');
-            return res.redirect('/login');
+            const loginPage = `${process.env.FRONTEND_URL}/notify`;
+            return res.redirect(loginPage);
         }
         try {
             const domain = user.email.split('@')[1].split('.')[0];

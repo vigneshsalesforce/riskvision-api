@@ -272,18 +272,9 @@ module.exports = {
               sequence: 35,
               options: {
                 static: [
-                  {
-                    label: "High",
-                    value: "High",
-                  },
-                  {
-                    label: "Medium",
-                    value: "Medium",
-                  },
-                  {
-                    label: "Low",
-                    value: "Low",
-                  },
+                  'High',
+                  'Medium',
+                  'Low',
                 ],
               },
             },

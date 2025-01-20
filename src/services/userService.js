@@ -53,11 +53,11 @@ const allUsers = async (req) => {
 
 const newUser = async (req) => {
     try {
-        const { User } = req.models;
+        const { user } = req.models;
         const userValues = req?.body;
-        const user = new User(userValues);
-        await user.save();
-        return user;
+        const users = new user(userValues);
+        await users.save();
+        return users;
     } catch (error) {
         throw error;
     }
@@ -65,9 +65,9 @@ const newUser = async (req) => {
 
 const retrieveUser = async (req) => {
     try {
-        const { User } = req.models;
-        const user = await User.findById(req.params.id);
-        return user;
+        const { user } = req.models;
+        const users = await user.findById(req.params.id);
+        return users;
     } catch (error) {
         throw error;
     }
@@ -75,10 +75,10 @@ const retrieveUser = async (req) => {
 
 const modifyUser = async (req) => {
     try {
-        const { User } = req.models;
+        const { user } = req.models;
         const userValues = req?.body;
-        const user = await User.findByIdAndUpdate(req.params.id, userValues, { new: true });
-        return user;
+        const users = await user.findByIdAndUpdate(req.params.id, userValues, { new: true });
+        return users;
     } catch (error) {
         throw error;
     }
@@ -86,11 +86,21 @@ const modifyUser = async (req) => {
 
 const archiveUser = async (req) => {
     try {
-        const { User } = req.models;
-        const user = await User.findByIdAndDelete(req.params.id);
-        return user;
+        const { user } = req.models;
+        const users = await user.findByIdAndDelete(req.params.id);
+        return users;
     }
     catch (error) {
+        throw error;
+    }
+}
+
+const retrieveUserProfiles = async (req) => {
+    try {
+        const { profile } = req.models;
+        const userProfiles = await profile.find();
+        return userProfiles;
+    } catch (error) {
         throw error;
     }
 }
@@ -101,4 +111,5 @@ module.exports = {
     retrieveUser,
     modifyUser,
     archiveUser,
+    retrieveUserProfiles,
 }

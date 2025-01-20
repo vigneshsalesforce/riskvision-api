@@ -5,6 +5,7 @@ const {
     newUser,
     modifyUser,
     archiveUser,
+    retrieveUserProfiles,
 } = require("../services/userService");
 
 const getAllUsers = async (req, res) => {
@@ -14,7 +15,6 @@ const getAllUsers = async (req, res) => {
         res.status(200).json({ success: true, data: users });
     } catch (error) {
         logger.error(`Get all users request failed`, error);
-        next(error);
     }
 }
 
@@ -25,7 +25,6 @@ const createUser = async (req, res) => {
         res.status(200).json({ success: true, data: user });
     } catch (error) {
         logger.error(`Create user request failed`, error);
-        next(error);
     }
 }
 
@@ -36,7 +35,6 @@ const getUser = async (req, res) => {
         res.status(200).json({ success: true, data: user });
     } catch (error) {
         logger.error(`Get user request failed for id ${req.params.id}`, error);
-        next(error);
     }
 }
 
@@ -50,7 +48,6 @@ const updateUser = async (req, res) => {
             `Update user request failed for id ${req.params.id}`,
             error
         );
-        next(error);
     }
 }
 
@@ -64,7 +61,16 @@ const deleteUser = async (req, res) => {
             `Delete user request failed for id ${req.params.id}`,
             error
         );
-        next(error);
+    }
+}
+
+const getUserProfiles = async(req, res) => {
+    try{
+        logger.info(`Get user profiles request`);
+        const userProfiles = await retrieveUserProfiles(req);
+        res.status(200).json({ success: true, data: userProfiles });
+    } catch(error){
+        logger.error(`Get user profiles request failed`, error);
     }
 }
 
@@ -74,4 +80,5 @@ module.exports = {
     getUser,
     updateUser,
     deleteUser,
+    getUserProfiles,
 }
