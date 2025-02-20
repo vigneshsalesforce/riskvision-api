@@ -13,6 +13,7 @@ const userRouter = require("./userRoutes");
 const objectRouter = require("./objectRoutes");
 const wizardRouter = require("./wizard");
 const propertyRiskAssessmentRouter = require("./propertyRiskAssessment");
+const brewerySiteInspectionRoutes = require('./brewerySiteInspectionRoutes');
 
 const applicationApiPrefix = "/api";
 const account = "/account";
@@ -26,6 +27,7 @@ const auth = "/auth";
 const object = "/object";
 const wizard = "/wizard";
 const propertyRiskAssessment = "/propertyRiskAssessment";
+const brewerySiteInspection = "/brewerySiteInspection";
 
 routes.get("/", (req, res) => {
     res.status(200).send("Welcome to the Riskvision API");
@@ -42,5 +44,6 @@ routes.use(`${applicationApiPrefix}${user}`, tenantMiddleware, authMiddleware, u
 routes.use(`${applicationApiPrefix}${object}`, tenantMiddleware, authMiddleware, objectRouter);
 routes.use(`${applicationApiPrefix}${wizard}`, tenantMiddleware, authMiddleware, wizardRouter);
 routes.use(`${applicationApiPrefix}${propertyRiskAssessment}`, tenantMiddleware, authMiddleware, propertyRiskAssessmentRouter)
+routes.use(`${applicationApiPrefix}${brewerySiteInspection}`, tenantMiddleware, authMiddleware, brewerySiteInspectionRoutes);
 
 module.exports = routes;
